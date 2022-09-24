@@ -32,6 +32,7 @@ function photographerFactory(data) {
     lien.setAttribute("class", "photoLink");
     const h2 = document.createElement("h2");
     h2.textContent = name;
+    h2.setAttribute("aria-label", `Lien vers la page de ${name}`);
     console.log(`Id is ${id}`);
     lien.setAttribute("href", `./photographer.html?id=${id}`);
     lien.appendChild(img);
