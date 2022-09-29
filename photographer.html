@@ -15,16 +15,28 @@
       <a href="index.html"
         ><img
           src="assets/images/logo.png"
-          alt="Photo du logo Fisheye"
+          alt="Fisheye Home Page"
           aria-label="Lien vers la page d'acceuil"
           class="logo"
       /></a>
     </header>
     <main id="main">
       <section class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">
-          Contactez-moi
-        </button>
+        <div class="contact_width">
+          <button class="contact_button" onclick="displayModal()">
+            Contactez-moi
+          </button>
+        </div>
+      </section>
+      <section class="photo-trier">
+        <label for="trier-photos">Trier par</label>
+        <div class="custom-select">
+          <select name="options" id="trier-options">
+            <option selected="selected" value="popularité">Popularité</option>
+            <option value="date">Date</option>
+            <option value="titre">Titre</option>
+          </select>
+        </div>
       </section>
     </main>
     <div id="contact_modal">
@@ -41,6 +53,10 @@
           <button class="contact_button">Envoyer</button>
         </form>
       </div>
+    </div>
+    <div class="like-price">
+      <p>297 081♥</p>
+      <!-- <p class="show-price">300€/jour</p> -->
     </div>
     <script src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>

@@ -16,14 +16,13 @@ header {
   height: 90px;
 }
 
-h1 {
+header h1 {
   color: #901c1c;
   margin-right: 100px;
 }
 
 .logo {
   height: 50px;
-  margin-left: 100px;
 }
 
 .photographer_section {
@@ -84,44 +83,13 @@ a {
 
 .contact_button:hover {
   background-color: #d3573c;
+  color: black;
 }
 
 /* Photo page */
-.photograph-header h1 {
-  font-weight: 400;
-  font-size: 64px;
-  color: #d3573c;
-}
-
-.photograph-header .city_country {
-  color: #901c1c;
-  font-weight: 400;
-  font-size: 24px;
-}
-
-.photograph-header .quote {
-  font-size: 18px;
-}
-
-.photograph-header img {
-  height: 200px;
-  width: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.photograph-header article {
-  order: -1;
-}
-.photograph-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-}
 
 body {
-  max-width: 1440px;
+  max-width: 1240px;
 
   margin: 0 auto;
 }
