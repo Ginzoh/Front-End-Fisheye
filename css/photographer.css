@@ -6,7 +6,47 @@
 *::after {
   box-sizing: border-box;
 }
+* {
+  margin: 0;
+  padding: 0;
+}
 
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 .contact_button {
   font-size: 20px;
   font-weight: bold;
@@ -144,29 +184,117 @@ body {
   width: 35%;
 }
 
-select {
-  background-color: #901c1c;
-  width: 175px;
-  height: 69px;
-  font-size: 18px;
-  line-height: 23.44px;
-  appearance: none;
-  position: relative;
-}
-
 section label {
   font-size: 18px;
   font-weight: 800;
   line-height: 23.44px;
 }
 
-select option {
-  line-height: 23.44px;
-  border-bottom: white;
-  padding: 10px;
+/* select */
+.select-wrapper {
+  position: relative;
+  user-select: none;
+  width: 100%;
+  width: 170px;
+  height: 69px;
+  display: inline-block;
+}
+.select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 3px #b2b2b2;
+}
+.select__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  height: 69px;
+  line-height: 60px;
+  background-color: #901c1c;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.custom-options {
+  position: absolute;
+  display: block;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border-top: 0;
+  background: #901c1c;
+  transition: all 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 3px 3px 3px #b2b2b2;
+}
+.select.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+.custom-option {
+  position: relative;
+  display: block;
+  padding: 0 20px 0 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffff;
+  line-height: 60px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.custom-option:hover {
+  cursor: pointer;
+  background-color: #b2b2b2;
+}
+.custom-option.selected {
+  color: #ffffff;
+  background-color: #901c1c;
+}
+
+/* arrow select*/
+.arrow {
+  position: relative;
+  height: 15px;
+  width: 15px;
+}
+.arrow::before,
+.arrow::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  width: 0.15rem;
+  height: 100%;
+  transition: all 0.5s;
+}
+.arrow::before {
+  left: -5px;
+  transform: rotate(45deg);
+  background-color: #fff;
+}
+.arrow::after {
+  left: 5px;
+  transform: rotate(-45deg);
+  background-color: #fff;
+}
+.open .arrow::before {
+  left: -5px;
+  transform: rotate(-45deg);
+}
+.open .arrow::after {
+  left: 5px;
+  transform: rotate(45deg);
 }
 /*style the arrow inside the select element:*/
-.custom-select:after {
+/* .custom-select:after {
   position: absolute;
   content: "";
   top: 30px;
@@ -175,54 +303,18 @@ select option {
   height: 0;
   border: 9px solid transparent;
   border-color: #fff transparent transparent transparent;
-}
+} */
 
-select:focus {
-  border: white;
-}
-/*point the arrow upwards when the select box is open (active):*/
-.select-selected.select-arrow-active:after {
-  border-color: transparent transparent #fff transparent;
-  top: 7px;
-}
-
-/*style the items (options), including the selected item:*/
-select {
-  color: #ffffff;
-  padding: 8px 16px;
-  padding-right: 32px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
-  user-select: none;
-}
-select {
-  border-radius: 5%;
-}
-/*style items (options):*/
-
-select:active {
-  border-radius: 5% 5% 0 0;
-}
-
-select:last-child {
-  border-radius: 0 0 5% 5%;
-}
-option:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
 body {
   max-width: 1240px;
   margin: 0 auto;
 }
-.custom-select {
-  position: relative;
-  display: inline-block;
-}
 
-.photo-trier img {
+.photo-trier img,
+.photo-trier video {
   width: 350px;
   height: 300px;
+  object-fit: cover;
 }
 
 section article {
@@ -239,7 +331,19 @@ section article {
   font-size: 24px;
   color: #901c1c;
 }
-
+.bottom p:first-child {
+  width: 75%;
+}
+.bottom .likes {
+  cursor: pointer;
+}
 .pictures {
   margin-top: 25px;
+}
+
+.myPhotos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 95px;
+  margin-top: 100px;
 }
