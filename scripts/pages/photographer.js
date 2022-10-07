@@ -1,21 +1,28 @@
 //Mettre le code JavaScript lié à la page photographer.html
-document
-  .querySelector(".select-wrapper")
-  .addEventListener("click", function () {
-    this.querySelector(".select").classList.toggle("open");
-  });
-for (const option of document.querySelectorAll(".custom-option")) {
-  option.addEventListener("click", function () {
-    if (!this.classList.contains("selected")) {
-      this.parentNode
-        .querySelector(".custom-option.selected")
-        .classList.remove("selected");
-      this.classList.add("selected");
-      this.closest(".select").querySelector(
-        ".select__trigger span"
-      ).textContent = this.textContent;
-    }
-  });
+
+//Menu select
+// const { medias } = await getMedias();
+function my_select() {
+  document
+    .querySelector(".select-wrapper")
+    .addEventListener("click", function (e) {
+      this.querySelector(".select").classList.toggle("open");
+    });
+  for (const option of document.querySelectorAll(".custom-option")) {
+    option.addEventListener("click", function () {
+      if (!this.classList.contains("selected")) {
+        this.parentNode
+          .querySelector(".custom-option.selected")
+          .classList.remove("selected");
+        this.classList.add("selected");
+        this.closest(".select").querySelector(
+          ".select__trigger span"
+        ).textContent = this.textContent;
+        let triValue = this.dataset.value;
+        console.log(triValue);
+      }
+    });
+  }
 }
 
 window.addEventListener("click", function (e) {
@@ -24,6 +31,8 @@ window.addEventListener("click", function (e) {
     select.classList.remove("open");
   }
 });
+
+//To set many attribrutes in one line
 function setAttributes(el, attrs) {
   for (let key in attrs) {
     el.setAttribute(key, attrs[key]);
@@ -145,7 +154,7 @@ async function getPhotographers() {
     photographers: [...photographers],
   };
 }
-async function getMedias() {
+async function getMedias(id) {
   // Penser à remplacer par les données récupérées dans le json
   const medias = await fetch("./data/photographers.json")
     .then((response) => {
@@ -159,8 +168,9 @@ async function getMedias() {
       return json["media"];
     });
   // et bien retourner le tableau photographers seulement une fois
+  // return medias.filter((item) => item.photographerId === id);
   return {
-    medias: [...medias],
+    medias: [...medias].filter((item) => item.photographerId === id),
   };
 }
 
@@ -175,20 +185,25 @@ async function showPhotograph(photographer, medias) {
   photographersSection.appendChild(firstSection);
   photographersSection.appendChild(picture);
   //2nd section
+  /*1- Récupérer la liste des médias d'un photograph ID 
+  cost mediaPhotograph = medias.filter(condition if)*/
+
+  /*2- Trier le tableau
+  mediaPhotograph.sort */
+  /*3- Construire le DOM d'affichage des médias */
   let total = 0;
+  console.log("*****fgsdg", medias);
   medias.forEach((media) => {
-    if (photographer.id === media.photographerId) {
-      let number = media.likes;
-      total += media.likes;
-      let mediaModel = mediaFactory(media);
-      const photo = mediaModel.getPhotos();
-      photos.appendChild(photo);
-      document.getElementById(media.id).onclick = function () {
-        changeN(media.id, ++number, ++total);
-      };
-    }
-    document.getElementById("total-likes").innerHTML = `${total} ♥`;
+    let number = media.likes;
+    total += media.likes;
+    let mediaModel = mediaFactory(media);
+    const photo = mediaModel.getPhotos();
+    photos.appendChild(photo);
+    document.getElementById(media.id).onclick = function () {
+      changeN(media.id, ++number, ++total);
+    };
   });
+  document.getElementById("total-likes").innerHTML = `${total} ♥`;
   show_price.appendChild(price_text);
 }
 function changeN(id, number, id_total) {
@@ -196,6 +211,7 @@ function changeN(id, number, id_total) {
   document.getElementById("total-likes").innerHTML = `${id_total} ♥`;
 }
 async function init() {
+  my_select();
   let params = new URL(document.location).searchParams;
   // console.log(params.get("id"));
   let id = parseInt(params.get("id"));
@@ -203,7 +219,7 @@ async function init() {
   console.log(id);
   // Récupère les datas des photographes
   const { photographers } = await getPhotographers();
-  const { medias } = await getMedias();
+  const { medias } = await getMedias(id);
   console.log(photographers);
   for (let key in photographers) {
     if (photographers[key].id === id) {
