@@ -281,6 +281,8 @@ async function init() {
       showPhotograph(photographers[key], medias);
     }
   }
+  document.getElementById("photos").innerHTML = "";
+  affichePhotos(call_tri("popularité", medias));
 }
 
 init();
