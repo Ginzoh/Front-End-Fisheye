@@ -2,7 +2,7 @@
 
 //Menu select
 // const { medias } = await getMedias();
-function my_select() {
+function my_select(medias) {
   document
     .querySelector(".select-wrapper")
     .addEventListener("click", function (e) {
@@ -20,11 +20,51 @@ function my_select() {
         ).textContent = this.textContent;
         let triValue = this.dataset.value;
         console.log(triValue);
+        const triMedias = call_tri(triValue, medias);
+        console.log("Wtf dud", triMedias);
+        document.getElementById("photos").innerHTML = "";
+        affichePhotos(triMedias);
       }
     });
   }
 }
+//fonction de tri
 
+function call_tri(triValue, medias) {
+  if (triValue === "popularité") {
+    return medias.sort((a, b) => b.likes - a.likes);
+  } else if (triValue === "date") {
+    // return medias.sort((a, b) => a.date - b.date);
+    return medias.sort(function (a, b) {
+      let key1 = a.date;
+      let key2 = b.date;
+
+      if (key1 > key2) {
+        return -1;
+      } else if (key1 == key2) {
+        return 0;
+      } else {
+        return 1;
+      }
+    });
+  } else if (triValue === "titre") {
+    return medias.sort((a, b) => {
+      const nameA = a.title.toUpperCase(); // ignore upper and lowercase
+      const nameB = b.title.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+  } else {
+    console.log("Mauvaise valeur de trie");
+  }
+}
 window.addEventListener("click", function (e) {
   const select = document.querySelector(".select");
   if (!select.contains(e.target)) {
@@ -173,7 +213,20 @@ async function getMedias(id) {
     medias: [...medias].filter((item) => item.photographerId === id),
   };
 }
-
+function affichePhotos(medias) {
+  let total = 0;
+  medias.forEach((media) => {
+    let number = media.likes;
+    total += media.likes;
+    let mediaModel = mediaFactory(media);
+    const photo = mediaModel.getPhotos();
+    photos.appendChild(photo);
+    document.getElementById(media.id).onclick = function () {
+      changeN(media.id, ++number, ++total);
+    };
+  });
+  document.getElementById("total-likes").innerHTML = `${total} ♥`;
+}
 async function showPhotograph(photographer, medias) {
   const photographersSection = document.querySelector(".photograph-header");
   const show_price = document.querySelector(".like-price");
@@ -191,19 +244,19 @@ async function showPhotograph(photographer, medias) {
   /*2- Trier le tableau
   mediaPhotograph.sort */
   /*3- Construire le DOM d'affichage des médias */
-  let total = 0;
   console.log("*****fgsdg", medias);
-  medias.forEach((media) => {
-    let number = media.likes;
-    total += media.likes;
-    let mediaModel = mediaFactory(media);
-    const photo = mediaModel.getPhotos();
-    photos.appendChild(photo);
-    document.getElementById(media.id).onclick = function () {
-      changeN(media.id, ++number, ++total);
-    };
-  });
-  document.getElementById("total-likes").innerHTML = `${total} ♥`;
+  // medias.forEach((media) => {
+  //   let number = media.likes;
+  //   total += media.likes;
+  //   let mediaModel = mediaFactory(media);
+  //   const photo = mediaModel.getPhotos();
+  //   photos.appendChild(photo);
+  //   document.getElementById(media.id).onclick = function () {
+  //     changeN(media.id, ++number, ++total);
+  //   };
+  // });
+  affichePhotos(medias);
+
   show_price.appendChild(price_text);
 }
 function changeN(id, number, id_total) {
@@ -211,7 +264,6 @@ function changeN(id, number, id_total) {
   document.getElementById("total-likes").innerHTML = `${id_total} ♥`;
 }
 async function init() {
-  my_select();
   let params = new URL(document.location).searchParams;
   // console.log(params.get("id"));
   let id = parseInt(params.get("id"));
@@ -220,6 +272,7 @@ async function init() {
   // Récupère les datas des photographes
   const { photographers } = await getPhotographers();
   const { medias } = await getMedias(id);
+  my_select(medias);
   console.log(photographers);
   for (let key in photographers) {
     if (photographers[key].id === id) {
