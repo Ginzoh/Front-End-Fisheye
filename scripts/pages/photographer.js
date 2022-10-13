@@ -28,7 +28,7 @@ function my_select(medias) {
     });
   }
 }
-//fonction de tri
+//fonction de tri des medias suivant le select
 
 function call_tri(triValue, medias) {
   if (triValue === "popularité") {
@@ -65,6 +65,8 @@ function call_tri(triValue, medias) {
     console.log("Mauvaise valeur de trie");
   }
 }
+
+//Event pour ouvrir le select
 window.addEventListener("click", function (e) {
   const select = document.querySelector(".select");
   if (!select.contains(e.target)) {
@@ -86,7 +88,7 @@ function mediaFactory(medias) {
   const title_image = title.replace("_", " ");
   let src_link = "";
   let photo = "";
-  function getPhotos() {
+  function getPhotos(index) {
     if (typeof image === "undefined") {
       photo = document.createElement("video");
       photo.setAttribute("autoplay", true);
@@ -95,7 +97,6 @@ function mediaFactory(medias) {
       photo = document.createElement("img");
       src_link = image;
     }
-
     const photoTitle = document.createElement("p");
     const photoLike = document.createElement("p");
     const divtitle = document.createElement("div");
@@ -107,9 +108,11 @@ function mediaFactory(medias) {
     console.log(image);
     setAttributes(photo, {
       src: `assets/Sample Photos/${src_link}`,
+      id: `${id}img`,
     });
     divtitle.setAttribute("class", "bottom");
-    divcontainer.setAttribute("class", "div_item");
+    divcontainer.dataset.index = index;
+    divcontainer.classList.add("div_item", "item-" + index);
     divtitle.appendChild(photoTitle);
     divtitle.appendChild(photoLike);
     divcontainer.appendChild(photo);
@@ -214,23 +217,79 @@ async function getMedias(id) {
   };
 }
 function affichePhotos(medias) {
+  const content = document.querySelector(".content");
+  const photos = document.querySelector(".myPhotos");
+  let modal = document.getElementById("myModal");
+  let modalImg = document.getElementById("img01");
+  var captionText = document.getElementById("caption");
   let total = 0;
-  medias.forEach((media) => {
+  let listId = [];
+  medias.forEach((media, index) => {
     let number = media.likes;
     total += media.likes;
     let mediaModel = mediaFactory(media);
-    const photo = mediaModel.getPhotos();
+    const photo = mediaModel.getPhotos(index);
     photos.appendChild(photo);
     document.getElementById(media.id).onclick = function () {
       changeN(media.id, ++number, ++total);
     };
+    listId.push(`${media.id}img`);
+    let img = document.getElementById(`${media.id}img`);
+    img.onclick = function (e) {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+      captionText.innerHTML = media.title;
+      content.dataset.current = e.target.parentElement.dataset.index;
+      console.log(e.target.parentElement.dataset.index);
+    };
+    document.querySelector(".next").onclick = function () {
+      let curr = modalImg.src;
+      console.clear();
+      console.log(
+        document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
+      );
+      let my_index = document.querySelector(
+        `.item-${parseInt(content.dataset.current) + 1}`
+      );
+      if (my_index) {
+        modalImg.setAttribute("src", my_index.querySelector("img").src);
+        content.dataset.current = parseInt(content.dataset.current) + 1;
+      }
+    };
+    document.querySelector(".prev").onclick = function () {
+      let curr = modalImg.src;
+      console.log(
+        document.querySelector(`.item-${parseInt(content.dataset.current) - 1}`)
+      );
+      let my_index = document.querySelector(
+        `.item-${parseInt(content.dataset.current) - 1}`
+      );
+      console.log("test", my_index);
+      if (my_index) {
+        if (
+          modalImg.setAttribute("src", my_index.querySelector("img")) === null
+        ) {
+          modalImg.setAttribute("src", my_index.querySelector("video").src);
+        } else {
+          modalImg.setAttribute("src", my_index.querySelector("img").src);
+        }
+        content.dataset.current = parseInt(content.dataset.current) - 1;
+      }
+    };
   });
   document.getElementById("total-likes").innerHTML = `${total} ♥`;
+  // listId.forEach((imgid) => {
+  //   let img = document.getElementById(imgid);
+  //   img.onclick = function () {
+  //     modal.style.display = "block";
+  //     modalImg.src = this.src;
+  //     captionText.innerHTML = "ho";
+  //   };
+  // });
 }
 async function showPhotograph(photographer, medias) {
   const photographersSection = document.querySelector(".photograph-header");
   const show_price = document.querySelector(".like-price");
-  const photos = document.querySelector(".myPhotos");
   const photographerModel = photographerFactory(photographer);
   const firstSection = photographerModel.getFirstSection();
   const price_text = photographerModel.getPrice();
@@ -244,19 +303,7 @@ async function showPhotograph(photographer, medias) {
   /*2- Trier le tableau
   mediaPhotograph.sort */
   /*3- Construire le DOM d'affichage des médias */
-  console.log("*****fgsdg", medias);
-  // medias.forEach((media) => {
-  //   let number = media.likes;
-  //   total += media.likes;
-  //   let mediaModel = mediaFactory(media);
-  //   const photo = mediaModel.getPhotos();
-  //   photos.appendChild(photo);
-  //   document.getElementById(media.id).onclick = function () {
-  //     changeN(media.id, ++number, ++total);
-  //   };
-  // });
-  affichePhotos(medias);
-
+  affichePhotos(call_tri("popularité", medias));
   show_price.appendChild(price_text);
 }
 function changeN(id, number, id_total) {
@@ -281,8 +328,11 @@ async function init() {
       showPhotograph(photographers[key], medias);
     }
   }
-  document.getElementById("photos").innerHTML = "";
-  affichePhotos(call_tri("popularité", medias));
+  // document.getElementById("photos").innerHTML = "";
+  // affichePhotos(call_tri("popularité", medias));
 }
-
+function closePhotoModal() {
+  const modal = document.getElementById("myModal");
+  modal.style.display = "none";
+}
 init();

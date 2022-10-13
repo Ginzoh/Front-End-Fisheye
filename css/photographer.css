@@ -315,8 +315,14 @@ body {
   width: 350px;
   height: 300px;
   object-fit: cover;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
+.photo-trier img:hover,
+.photo-trier video:hover {
+  opacity: 0.8;
+}
 section article {
   display: block;
 }
@@ -350,4 +356,108 @@ section article {
 
 .custom-option.selected {
   display: none;
+}
+.modalPics {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.3); /* Black w/ opacity */
+}
+/* Modal Content (Image) */
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 1050px;
+  height: 900px;
+  object-fit: cover;
+}
+
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  /* max-width: 700px; */
+  /* text-align: center; */
+  color: #901c1c;
+  padding: 10px 0;
+  font-weight: 400;
+  font-size: 24px;
+  /* height: 150px; */
+}
+/* Add Animation - Zoom in the Modal */
+.modal-content,
+#caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+.content {
+  margin: 5% auto;
+  width: 100%;
+  max-width: 1253px;
+  max-height: 984px;
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+  background: #fff;
+  border: 2px solid #95fff9;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  padding-top: 10px;
+}
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* #myModal .close {
+  background-color: #d3573c;
+} */
+.close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 42px;
+  height: 42px;
+  opacity: 1;
+  cursor: pointer;
+  transform: scale(0.7);
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 42px;
+  width: 3px;
+  background-color: #901c1c;
+}
+
+.next,
+.prev {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  padding: 10px;
+  cursor: pointer;
+  color: #901c1c;
+}
+.next {
+  right: 0;
 }

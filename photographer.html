@@ -60,6 +60,20 @@
 
         <article class="myPhotos" id="photos"></article>
       </section>
+      <!-- The Modal -->
+      <div id="myModal" class="modalPics">
+        <div class="content">
+          <!-- The Close Button -->
+          <span class="close" onclick="closePhotoModal()"> </span>
+          <div class="next">Next</div>
+          <div class="prev">Prev</div>
+          <!-- Modal Content (The Image) -->
+          <img class="modal-content" id="img01" />
+
+          <!-- Modal Caption (Image Text) -->
+          <p id="caption"></p>
+        </div>
+      </div>
     </main>
     <div id="contact_modal">
       <div class="modal">
@@ -86,6 +100,7 @@
               type="text"
               id="last"
               name="last"
+              minlength="2"
             /><br />
             <p class="checker checkLast">Need more than 2 letters</p>
           </div>
