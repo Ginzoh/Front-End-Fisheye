@@ -221,7 +221,7 @@ function affichePhotos(medias) {
   const photos = document.querySelector(".myPhotos");
   let modal = document.getElementById("myModal");
   let modalImg = document.getElementById("img01");
-  var captionText = document.getElementById("caption");
+  let captionText = document.getElementById("caption");
   let total = 0;
   let listId = [];
   medias.forEach((media, index) => {
@@ -237,6 +237,19 @@ function affichePhotos(medias) {
     let img = document.getElementById(`${media.id}img`);
     img.onclick = function (e) {
       modal.style.display = "block";
+      if (typeof media.image === "undefined") {
+        modalImg = document.getElementById("img01");
+        let parent;
+        let iframe = document.createElement("iframe");
+        let currFrame;
+        currFrame = iframe.cloneNode(false);
+        currFrame.setAttribute("id", modalImg.getAttribute("id"));
+        currFrame.setAttribute("class", "modal-content");
+        currFrame.src = img.src;
+        parent = modalImg.parentNode;
+        parent.insertBefore(currFrame, modalImg);
+        parent.removeChild(modalImg);
+      }
       modalImg.src = this.src;
       captionText.innerHTML = media.title;
       content.dataset.current = e.target.parentElement.dataset.index;
@@ -244,6 +257,34 @@ function affichePhotos(medias) {
     };
     document.querySelector(".next").onclick = function () {
       let curr = modalImg.src;
+      if (typeof media.video === "undefined") {
+        console.log("helloooooooooooooooooooooooooooooooooooo");
+        modalImg = document.getElementById("img01");
+        let parent;
+        let img = document.createElement("img");
+        let currFrame;
+        currFrame = img.cloneNode(false);
+        currFrame.setAttribute("id", modalImg.getAttribute("id"));
+        currFrame.setAttribute("class", "modal-content");
+        currFrame.src = this.src;
+        parent = modalImg.parentNode;
+        parent.insertBefore(currFrame, modalImg);
+        parent.removeChild(modalImg);
+      }
+      if (typeof media.image === "undefined") {
+        modalImg = document.getElementById("img01");
+        let parent;
+        let iframe = document.createElement("iframe");
+        let currFrame;
+        currFrame = iframe.cloneNode(false);
+        currFrame.setAttribute("id", modalImg.getAttribute("id"));
+        currFrame.setAttribute("class", "modal-content");
+        currFrame.src = img.src;
+        parent = modalImg.parentNode;
+        parent.insertBefore(currFrame, modalImg);
+        parent.removeChild(modalImg);
+      }
+      modalImg = document.getElementById("img01");
       console.clear();
       console.log(
         document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
@@ -258,6 +299,49 @@ function affichePhotos(medias) {
     };
     document.querySelector(".prev").onclick = function () {
       let curr = modalImg.src;
+      // if (typeof media.image === "undefined") {
+      //   modalImg = document.getElementById("img01");
+      //   let parent;
+      //   let iframe = document.createElement("iframe");
+      //   let currFrame;
+      //   currFrame = iframe.cloneNode(false);
+      //   currFrame.setAttribute("id", modalImg.getAttribute("id"));
+      //   currFrame.setAttribute("class", "modal-content");
+      //   currFrame.src = img.src;
+      //   parent = modalImg.parentNode;
+      //   parent.insertBefore(currFrame, modalImg);
+      //   parent.removeChild(modalImg);
+      // }
+      // modalImg = document.getElementById("img01");
+      if (typeof media.video === "undefined") {
+        console.log("helloooooooooooooooooooooooooooooooooooo");
+        modalImg = document.getElementById("img01");
+        let parent;
+        let img = document.createElement("img");
+        let currFrame;
+        currFrame = img.cloneNode(false);
+        currFrame.setAttribute("id", modalImg.getAttribute("id"));
+        currFrame.setAttribute("class", "modal-content");
+        currFrame.src = this.src;
+        parent = modalImg.parentNode;
+        parent.insertBefore(currFrame, modalImg);
+        parent.removeChild(modalImg);
+      }
+      if (typeof media.image === "undefined") {
+        modalImg = document.getElementById("img01");
+        let parent;
+        let iframe = document.createElement("iframe");
+        let currFrame;
+        currFrame = iframe.cloneNode(false);
+        currFrame.setAttribute("id", modalImg.getAttribute("id"));
+        currFrame.setAttribute("class", "modal-content");
+        currFrame.src = img.src;
+        parent = modalImg.parentNode;
+        parent.insertBefore(currFrame, modalImg);
+        parent.removeChild(modalImg);
+      }
+      modalImg = document.getElementById("img01");
+      modalImg.src = this.src;
       console.log(
         document.querySelector(`.item-${parseInt(content.dataset.current) - 1}`)
       );
@@ -266,15 +350,37 @@ function affichePhotos(medias) {
       );
       console.log("test", my_index);
       if (my_index) {
-        if (
-          modalImg.setAttribute("src", my_index.querySelector("img")) === null
-        ) {
-          modalImg.setAttribute("src", my_index.querySelector("video").src);
-        } else {
-          modalImg.setAttribute("src", my_index.querySelector("img").src);
-        }
+        // if (
+        //   modalImg.setAttribute("src", my_index.querySelector("img")) === null
+        // ) {
+        //   modalImg.setAttribute("src", my_index.querySelector("video").src);
+        // } else {
+        //   console.log("Test this", modalImg);
+        //   modalImg.setAttribute("src", my_index.querySelector("img").src);
+        // }
+        modalImg.setAttribute("src", my_index.querySelector("img").src);
         content.dataset.current = parseInt(content.dataset.current) - 1;
       }
+    };
+    document.querySelector(".close").onclick = function () {
+      // console.log(media.image);
+      // console.log("wtf");
+      // modalImg = document.getElementById("img01");
+      // // modalImg.setAttribute("src", "");
+      // let parent;
+      // let img = document.createElement("img");
+      // let currFrame;
+      // currFrame = img.cloneNode(false);
+      // currFrame.setAttribute("id", modalImg.getAttribute("id"));
+      // currFrame.setAttribute("class", "modal-content");
+      // currFrame.setAttribute("src", "");
+      // // currFrame.src = modalImg.src;
+      // parent = modalImg.parentNode;
+      // parent.insertBefore(currFrame, modalImg);
+      // parent.removeChild(modalImg);
+
+      const modal = document.getElementById("myModal");
+      modal.style.display = "none";
     };
   });
   document.getElementById("total-likes").innerHTML = `${total} ♥`;
@@ -305,6 +411,11 @@ async function showPhotograph(photographer, medias) {
   /*3- Construire le DOM d'affichage des médias */
   affichePhotos(call_tri("popularité", medias));
   show_price.appendChild(price_text);
+  let nameTitle = document.querySelector("h2");
+  console.clear();
+  console.log("What's your name", photographer.name);
+  let name = document.createTextNode(` ${photographer.name}`);
+  nameTitle.appendChild(name);
 }
 function changeN(id, number, id_total) {
   document.getElementById(id).innerHTML = `${number} ♥`;

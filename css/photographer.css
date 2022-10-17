@@ -9,6 +9,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "DM Sans", sans-serif;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -75,6 +76,8 @@ table {
 .modal header {
   justify-content: space-between;
   width: 100%;
+  margin-top: 0px;
+  height: 0%;
 }
 
 .modal header img {
@@ -84,7 +87,8 @@ table {
 .modal header h2 {
   font-size: 64px;
   font-weight: normal;
-  text-align: center;
+  /* text-align: center; */
+  margin-top: 15px;
 }
 
 form {
@@ -92,19 +96,24 @@ form {
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
+  gap: 10px;
+  margin-top: 19px;
 }
 
 form label {
   color: #312e2e;
   font-size: 36px;
+  margin-bottom: 5px;
 }
 
+form button {
+  margin-top: 49px;
+}
 form div {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   width: 100%;
   align-items: self-start;
-  margin-bottom: 26px;
 }
 
 form input {
@@ -113,7 +122,9 @@ form input {
   border: none;
   border-radius: 5px;
 }
-
+#message {
+  height: 170px;
+}
 .contact_width {
   width: 30%;
 }
@@ -411,6 +422,17 @@ section article {
   color: #fff;
   padding-top: 10px;
 }
+.fix {
+  width: 50%;
+  background-color: #db8876;
+  margin: auto;
+  max-height: 900px;
+  max-width: 669px;
+  border-radius: 5px;
+  color: #000000;
+  border: none;
+  box-shadow: -1px 4px 5px #0000007d;
+}
 @keyframes zoom {
   from {
     transform: scale(0);
@@ -449,7 +471,7 @@ section article {
   background-color: #901c1c;
 }
 
-.next,
+/* .next,
 .prev {
   position: absolute;
   z-index: 1;
@@ -457,7 +479,57 @@ section article {
   padding: 10px;
   cursor: pointer;
   color: #901c1c;
+} */
+.newArrow {
+  border: solid #911c1c;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  padding: 10px;
+  cursor: pointer;
 }
 .next {
-  right: 0;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  left: 95%;
+}
+
+.prev {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  left: 4%;
+}
+
+.checker {
+  display: none;
+  font-size: 17px;
+  color: red;
+}
+
+.text-control {
+  margin: 0;
+  padding: 8px;
+  width: 599px;
+  border-radius: 8px;
+  font-size: 20px;
+  height: 68px;
+}
+.formData[data-error]::after {
+  content: attr(data-error);
+  font-size: 0.4em;
+  color: #e54858;
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  text-align: right;
+  line-height: 0.3;
+  opacity: 0;
+  transition: 0.3s;
+}
+.formData[data-error-visible="true"]::after {
+  opacity: 1;
+}
+.formData[data-error-visible="true"] .text-control {
+  border: 2px solid #e54858;
 }

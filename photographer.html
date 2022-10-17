@@ -64,19 +64,20 @@
       <div id="myModal" class="modalPics">
         <div class="content">
           <!-- The Close Button -->
-          <span class="close" onclick="closePhotoModal()"> </span>
-          <div class="next">Next</div>
-          <div class="prev">Prev</div>
+          <span class="close"> </span>
+          <i class="newArrow next"></i>
+          <i class="newArrow prev"></i>
           <!-- Modal Content (The Image) -->
           <img class="modal-content" id="img01" />
+          <!-- <video autoplay="true" class="modal-content" id="video01"></video> -->
 
           <!-- Modal Caption (Image Text) -->
           <p id="caption"></p>
         </div>
       </div>
     </main>
-    <div id="contact_modal">
-      <div class="modal">
+    <div id="contact_modal" class="modalPics">
+      <div class="content modal fix">
         <header>
           <h2>Contactez-moi</h2>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
@@ -109,6 +110,17 @@
             <input class="text-control" type="email" id="email" name="email" />
             <br />
             <p class="checker checkEmail">Need valid email</p>
+          </div>
+          <div class="formData">
+            <label for="message">Message</label><br />
+            <input
+              class="text-control"
+              type="text"
+              id="message"
+              name="message"
+            />
+            <br />
+            <p class="checker checkEmail">Champ doit être rempli</p>
           </div>
           <button class="contact_button">Envoyer</button>
         </form>
