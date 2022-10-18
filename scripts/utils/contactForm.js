@@ -13,9 +13,22 @@ const isEmail = function (email) {
   return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email);
 };
 
+//checking the first name
+document.getElementById("first").addEventListener("input", checkFirstName);
+
+//checking the last name
+document.getElementById("last").addEventListener("input", checkLastName);
+
+//checking the email
+document.getElementById("email").addEventListener("input", checkEmail);
+
+//checking the email
+document.getElementById("message").addEventListener("input", checkMessage);
+
 let firstNameBool = false;
 let LastNameBool = false;
 let emailBool = false;
+let messageBool = false;
 
 function checkFirstName() {
   const text = document.getElementById("first");
@@ -50,12 +63,36 @@ function checkEmail() {
   }
 }
 
+function checkMessage() {
+  const text = document.getElementById("message");
+  if (text.value.length < 5) {
+    toggleError(".checkMessage");
+    messageBool = false;
+  } else if (text.value.length >= 5) {
+    toggleError(".checkMessage", "none");
+    messageBool = true;
+  }
+}
+function toggleError(selector, display = "block") {
+  document.querySelector(selector).style.display = display;
+}
 function validate() {
   event.preventDefault();
   checkFirstName();
   if (!firstNameBool) {
     toggleError(".checkName");
     alert("Please enter a valid first name");
+    return false;
+  }
+  if (!LastNameBool) {
+    toggleError(".checkLast");
+    alert("Please enter a valid last name");
+    return false;
+  }
+  checkEmail();
+  if (!emailBool) {
+    toggleError(".checkEmail");
+    alert("Please enter a valid email");
     return false;
   }
 }

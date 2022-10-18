@@ -156,6 +156,10 @@ body {
 .photograph-header {
   background-color: #fafafa;
   height: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 55px;
 }
 
 .photograph-header h1 {
@@ -184,12 +188,6 @@ body {
 .photograph-header article {
   order: -1;
 }
-.photograph-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-}
 
 .photograph-header article {
   width: 35%;
@@ -209,6 +207,7 @@ section label {
   width: 170px;
   height: 69px;
   display: inline-block;
+  margin-left: 25px;
 }
 .select {
   position: relative;
@@ -339,7 +338,10 @@ section article {
 }
 
 .div_item {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  width: 350px;
 }
 
 .bottom {
@@ -347,6 +349,8 @@ section article {
   justify-content: space-between;
   font-size: 24px;
   color: #901c1c;
+  margin-top: 10px;
+  width: 350px;
 }
 .bottom p:first-child {
   width: 75%;
@@ -359,10 +363,12 @@ section article {
 }
 
 .myPhotos {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 95px;
-  margin-top: 100px;
+  display: flex;
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  /* flex-direction: column; */
+  margin-top: 58px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .custom-option.selected {
