@@ -237,8 +237,8 @@ function affichePhotos(medias) {
     let img = document.getElementById(`${media.id}img`);
     img.onclick = function (e) {
       modal.style.display = "block";
+      modalImg = document.getElementById("img01");
       if (typeof media.image === "undefined") {
-        modalImg = document.getElementById("img01");
         let parent;
         let iframe = document.createElement("iframe");
         let currFrame;
@@ -375,7 +375,17 @@ function affichePhotos(medias) {
       // parent = modalImg.parentNode;
       // parent.insertBefore(currFrame, modalImg);
       // parent.removeChild(modalImg);
-
+      console.log("helloooooooooooooooooooooooooooooooooooo");
+      modalImg = document.getElementById("img01");
+      let parent;
+      let img = document.createElement("img");
+      let currFrame;
+      currFrame = img.cloneNode(false);
+      currFrame.setAttribute("id", modalImg.getAttribute("id"));
+      currFrame.setAttribute("class", "modal-content");
+      parent = modalImg.parentNode;
+      parent.insertBefore(currFrame, modalImg);
+      parent.removeChild(modalImg);
       const modal = document.getElementById("myModal");
       modal.style.display = "none";
     };
