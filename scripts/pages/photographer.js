@@ -257,6 +257,34 @@ function affichePhotos(medias) {
     };
     document.querySelector(".next").onclick = function () {
       let curr = modalImg.src;
+      // if (typeof media.video === "undefined") {
+      //   console.log("helloooooooooooooooooooooooooooooooooooo");
+      //   modalImg = document.getElementById("img01");
+      //   let parent;
+      //   let img = document.createElement("img");
+      //   let currFrame;
+      //   currFrame = img.cloneNode(false);
+      //   currFrame.setAttribute("id", modalImg.getAttribute("id"));
+      //   currFrame.setAttribute("class", "modal-content");
+      //   currFrame.src = this.src;
+      //   parent = modalImg.parentNode;
+      //   parent.insertBefore(currFrame, modalImg);
+      //   parent.removeChild(modalImg);
+      // }
+      // if (typeof media.image === "undefined") {
+      //   modalImg = document.getElementById("img01");
+      //   let parent;
+      //   let iframe = document.createElement("iframe");
+      //   let currFrame;
+      //   currFrame = iframe.cloneNode(false);
+      //   currFrame.setAttribute("id", modalImg.getAttribute("id"));
+      //   currFrame.setAttribute("class", "modal-content");
+      //   currFrame.src = img.src;
+      //   parent = modalImg.parentNode;
+      //   parent.insertBefore(currFrame, modalImg);
+      //   parent.removeChild(modalImg);
+      // }
+      // modalImg = document.getElementById("img01");
       if (typeof media.video === "undefined") {
         console.log("helloooooooooooooooooooooooooooooooooooo");
         modalImg = document.getElementById("img01");
@@ -273,18 +301,9 @@ function affichePhotos(medias) {
       }
       if (typeof media.image === "undefined") {
         modalImg = document.getElementById("img01");
-        let parent;
-        let iframe = document.createElement("iframe");
-        let currFrame;
-        currFrame = iframe.cloneNode(false);
-        currFrame.setAttribute("id", modalImg.getAttribute("id"));
-        currFrame.setAttribute("class", "modal-content");
-        currFrame.src = img.src;
-        parent = modalImg.parentNode;
-        parent.insertBefore(currFrame, modalImg);
-        parent.removeChild(modalImg);
       }
       modalImg = document.getElementById("img01");
+      modalImg.src = this.src;
       console.clear();
       console.log(
         document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
@@ -293,26 +312,27 @@ function affichePhotos(medias) {
         `.item-${parseInt(content.dataset.current) + 1}`
       );
       if (my_index) {
-        modalImg.setAttribute("src", my_index.querySelector("img").src);
+        // modalImg.setAttribute("src", my_index.querySelector("img").src);
+        if (my_index.querySelector("img") === null) {
+          let parent;
+          let iframe = document.createElement("iframe");
+          let currFrame;
+          currFrame = iframe.cloneNode(false);
+          currFrame.setAttribute("id", modalImg.getAttribute("id"));
+          currFrame.setAttribute("class", "modal-content");
+          currFrame.setAttribute("src", my_index.querySelector("video").src);
+          parent = modalImg.parentNode;
+          parent.insertBefore(currFrame, modalImg);
+          parent.removeChild(modalImg);
+        } else {
+          console.log("Test this", modalImg);
+          modalImg.setAttribute("src", my_index.querySelector("img").src);
+        }
         content.dataset.current = parseInt(content.dataset.current) + 1;
       }
     };
     document.querySelector(".prev").onclick = function () {
       let curr = modalImg.src;
-      // if (typeof media.image === "undefined") {
-      //   modalImg = document.getElementById("img01");
-      //   let parent;
-      //   let iframe = document.createElement("iframe");
-      //   let currFrame;
-      //   currFrame = iframe.cloneNode(false);
-      //   currFrame.setAttribute("id", modalImg.getAttribute("id"));
-      //   currFrame.setAttribute("class", "modal-content");
-      //   currFrame.src = img.src;
-      //   parent = modalImg.parentNode;
-      //   parent.insertBefore(currFrame, modalImg);
-      //   parent.removeChild(modalImg);
-      // }
-      // modalImg = document.getElementById("img01");
       console.log(media.video, media.image, "media tests");
       if (typeof media.video === "undefined") {
         console.log("helloooooooooooooooooooooooooooooooooooo");
