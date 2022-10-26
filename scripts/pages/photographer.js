@@ -19,9 +19,7 @@ function my_select(medias) {
           ".select__trigger span"
         ).textContent = this.textContent;
         let triValue = this.dataset.value;
-        console.log(triValue);
         const triMedias = call_tri(triValue, medias);
-        console.log("Wtf dud", triMedias);
         document.getElementById("photos").innerHTML = "";
         affichePhotos(triMedias);
       }
@@ -84,10 +82,11 @@ function setAttributes(el, attrs) {
 function mediaFactory(medias) {
   const { id, photographerId, title, video, image, likes, date, price } =
     medias;
-  console.log(medias);
-  const title_image = title.replace("_", " ");
-  let src_link = "";
-  let photo = "";
+  const title_image = title;
+  // const namePic = image.replace("_", " ");
+  //alt des pics
+  let src_link;
+  let photo;
   function getPhotos(index) {
     if (typeof image === "undefined") {
       photo = document.createElement("video");
@@ -101,14 +100,17 @@ function mediaFactory(medias) {
     const photoLike = document.createElement("p");
     const divtitle = document.createElement("div");
     const divcontainer = document.createElement("div");
-    photoLike.setAttribute("id", id);
-    photoLike.setAttribute("class", "likes");
+    setAttributes(photoLike, {
+      id: id,
+      class: "likes",
+    });
+    photoLike.setAttribute("aria-label", "likes");
     photoTitle.textContent = title_image;
     photoLike.textContent = `${likes}  ♥`;
-    console.log(image);
     setAttributes(photo, {
       src: `assets/Sample Photos/${src_link}`,
       id: `${id}img`,
+      alt: `${title_image}, closeup view `,
     });
     divtitle.setAttribute("class", "bottom");
     divcontainer.dataset.index = index;
@@ -136,7 +138,6 @@ function mediaFactory(medias) {
 function photographerFactory(photographer) {
   const { name, portrait, id, city, country, tagline, price } = photographer;
   const picture = `assets/Sample Photos/Photographers ID Photos/${portrait}`;
-  console.log(photographer);
   function getFirstSection() {
     const profile = document.createElement("article");
     const name_display = document.createElement("h1");
@@ -160,7 +161,7 @@ function photographerFactory(photographer) {
   }
   function getPicture() {
     const picture_display = document.createElement("img");
-    setAttributes(picture_display, { src: picture, alt: "" });
+    setAttributes(picture_display, { src: picture, alt: `${name}` });
     return picture_display;
   }
 
@@ -189,7 +190,6 @@ async function getPhotographers() {
       return response.json();
     })
     .then((json) => {
-      console.log(json["photographers"]);
       return json["photographers"];
     });
   // et bien retourner le tableau photographers seulement une fois
@@ -207,7 +207,6 @@ async function getMedias(id) {
       return response.json();
     })
     .then((json) => {
-      console.log(json["media"]);
       return json["media"];
     });
   // et bien retourner le tableau photographers seulement une fois
@@ -233,7 +232,7 @@ function affichePhotos(medias) {
     document.getElementById(media.id).onclick = function () {
       changeN(media.id, ++number, ++total);
     };
-    listId.push(`${media.id}img`);
+    // listId.push(`${media.id}img`);
     let img = document.getElementById(`${media.id}img`);
     img.onclick = function (e) {
       modal.style.display = "block";
@@ -253,40 +252,10 @@ function affichePhotos(medias) {
       modalImg.src = this.src;
       captionText.innerHTML = media.title;
       content.dataset.current = e.target.parentElement.dataset.index;
-      console.log(e.target.parentElement.dataset.index);
     };
     document.querySelector(".next").onclick = function () {
       let curr = modalImg.src;
-      // if (typeof media.video === "undefined") {
-      //   console.log("helloooooooooooooooooooooooooooooooooooo");
-      //   modalImg = document.getElementById("img01");
-      //   let parent;
-      //   let img = document.createElement("img");
-      //   let currFrame;
-      //   currFrame = img.cloneNode(false);
-      //   currFrame.setAttribute("id", modalImg.getAttribute("id"));
-      //   currFrame.setAttribute("class", "modal-content");
-      //   currFrame.src = this.src;
-      //   parent = modalImg.parentNode;
-      //   parent.insertBefore(currFrame, modalImg);
-      //   parent.removeChild(modalImg);
-      // }
-      // if (typeof media.image === "undefined") {
-      //   modalImg = document.getElementById("img01");
-      //   let parent;
-      //   let iframe = document.createElement("iframe");
-      //   let currFrame;
-      //   currFrame = iframe.cloneNode(false);
-      //   currFrame.setAttribute("id", modalImg.getAttribute("id"));
-      //   currFrame.setAttribute("class", "modal-content");
-      //   currFrame.src = img.src;
-      //   parent = modalImg.parentNode;
-      //   parent.insertBefore(currFrame, modalImg);
-      //   parent.removeChild(modalImg);
-      // }
-      // modalImg = document.getElementById("img01");
       if (typeof media.video === "undefined") {
-        console.log("helloooooooooooooooooooooooooooooooooooo");
         modalImg = document.getElementById("img01");
         let parent;
         let img = document.createElement("img");
@@ -304,10 +273,7 @@ function affichePhotos(medias) {
       }
       modalImg = document.getElementById("img01");
       modalImg.src = this.src;
-      console.clear();
-      console.log(
-        document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
-      );
+
       let my_index = document.querySelector(
         `.item-${parseInt(content.dataset.current) + 1}`
       );
@@ -325,7 +291,6 @@ function affichePhotos(medias) {
           parent.insertBefore(currFrame, modalImg);
           parent.removeChild(modalImg);
         } else {
-          console.log("Test this", modalImg);
           modalImg.setAttribute("src", my_index.querySelector("img").src);
         }
         content.dataset.current = parseInt(content.dataset.current) + 1;
@@ -333,9 +298,8 @@ function affichePhotos(medias) {
     };
     document.querySelector(".prev").onclick = function () {
       let curr = modalImg.src;
-      console.log(media.video, media.image, "media tests");
+
       if (typeof media.video === "undefined") {
-        console.log("helloooooooooooooooooooooooooooooooooooo");
         modalImg = document.getElementById("img01");
         let parent;
         let img = document.createElement("img");
@@ -353,13 +317,9 @@ function affichePhotos(medias) {
       }
       modalImg = document.getElementById("img01");
       modalImg.src = this.src;
-      console.log(
-        document.querySelector(`.item-${parseInt(content.dataset.current) - 1}`)
-      );
       let my_index = document.querySelector(
         `.item-${parseInt(content.dataset.current) - 1}`
       );
-      console.log("test", my_index);
       if (my_index) {
         if (my_index.querySelector("img") === null) {
           let parent;
@@ -373,29 +333,12 @@ function affichePhotos(medias) {
           parent.insertBefore(currFrame, modalImg);
           parent.removeChild(modalImg);
         } else {
-          console.log("Test this", modalImg);
           modalImg.setAttribute("src", my_index.querySelector("img").src);
         }
         content.dataset.current = parseInt(content.dataset.current) - 1;
       }
     };
     document.querySelector(".close").onclick = function () {
-      // console.log(media.image);
-      // console.log("wtf");
-      // modalImg = document.getElementById("img01");
-      // // modalImg.setAttribute("src", "");
-      // let parent;
-      // let img = document.createElement("img");
-      // let currFrame;
-      // currFrame = img.cloneNode(false);
-      // currFrame.setAttribute("id", modalImg.getAttribute("id"));
-      // currFrame.setAttribute("class", "modal-content");
-      // currFrame.setAttribute("src", "");
-      // // currFrame.src = modalImg.src;
-      // parent = modalImg.parentNode;
-      // parent.insertBefore(currFrame, modalImg);
-      // parent.removeChild(modalImg);
-      console.log("helloooooooooooooooooooooooooooooooooooo");
       modalImg = document.getElementById("img01");
       let parent;
       let img = document.createElement("img");
@@ -411,14 +354,6 @@ function affichePhotos(medias) {
     };
   });
   document.getElementById("total-likes").innerHTML = `${total} ♥`;
-  // listId.forEach((imgid) => {
-  //   let img = document.getElementById(imgid);
-  //   img.onclick = function () {
-  //     modal.style.display = "block";
-  //     modalImg.src = this.src;
-  //     captionText.innerHTML = "ho";
-  //   };
-  // });
 }
 async function showPhotograph(photographer, medias) {
   const photographersSection = document.querySelector(".photograph-header");
@@ -439,8 +374,9 @@ async function showPhotograph(photographer, medias) {
   affichePhotos(call_tri("popularité", medias));
   show_price.appendChild(price_text);
   let nameTitle = document.querySelector("h2");
-  console.clear();
-  console.log("What's your name", photographer.name);
+  let myModal = document.querySelector("#contact_modal");
+  myModal.setAttribute("aria-label", `Contact me ${photographer.name}`);
+  myModal.setAttribute("aria-labelleby", "2");
   let name = document.createTextNode(` ${photographer.name}`);
   nameTitle.appendChild(name);
 }
@@ -450,19 +386,13 @@ function changeN(id, number, id_total) {
 }
 async function init() {
   let params = new URL(document.location).searchParams;
-  // console.log(params.get("id"));
   let id = parseInt(params.get("id"));
-  // const id = window.location.search;
-  console.log(id);
   // Récupère les datas des photographes
   const { photographers } = await getPhotographers();
   const { medias } = await getMedias(id);
   my_select(medias);
-  console.log(photographers);
   for (let key in photographers) {
     if (photographers[key].id === id) {
-      console.log(photographers[key]);
-      console.log(medias);
       showPhotograph(photographers[key], medias);
     }
   }

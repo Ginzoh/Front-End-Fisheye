@@ -29,31 +29,53 @@
     <main id="main">
       <section class="photograph-header">
         <div class="contact_width">
-          <button class="contact_button" onclick="displayModal()">
+          <button
+            class="contact_button"
+            onclick="displayModal()"
+            aria-label="Contact me"
+          >
             Contactez-moi
           </button>
         </div>
       </section>
       <section class="photo-trier">
         <label for="trier-photos">Trier par</label>
-
-        <!-- <select name="options" id="trier-options">
-            <option value="popularité">Popularité</option>
-            <option value="date">Date</option>
-            <option value="titre">Titre</option>
-          </select> -->
-        <div class="select-wrapper" id="trier-options">
-          <div class="select">
-            <div class="select__trigger">
+        <div
+          class="select-wrapper"
+          id="trier-options"
+          aria-label="Order by"
+          aria-labelledby="8"
+        >
+          <div
+            class="select"
+            role="listbox"
+            aria-activedescendant="listbox-1"
+            aria-selected
+            aria-labelledby="trier-photos"
+          >
+            <div
+              class="select__trigger"
+              role="button"
+              aria-haspopup="listbox"
+              aria-expanded
+            >
               <span>Popularité</span>
               <div class="arrow"></div>
             </div>
             <div class="custom-options">
-              <span class="custom-option selected" data-value="popularité"
+              <span
+                class="custom-option selected"
+                role="option"
+                data-value="popularité"
+                id="popularité"
                 >Popularité</span
               >
-              <span class="custom-option" data-value="date">Date</span>
-              <span class="custom-option" data-value="titre">Titre</span>
+              <span class="custom-option" role="option" data-value="date"
+                >Date</span
+              >
+              <span class="custom-option" role="option" data-value="titre"
+                >Titre</span
+              >
             </div>
           </div>
         </div>
@@ -61,12 +83,12 @@
         <article class="myPhotos" id="photos"></article>
       </section>
       <!-- The Modal -->
-      <div id="myModal" class="modalPics">
+      <div id="myModal" class="modalPics" aria-label="image closeup view">
         <div class="content">
           <!-- The Close Button -->
-          <span class="close"> </span>
-          <i class="newArrow next"></i>
-          <i class="newArrow prev"></i>
+          <span class="close" aria-label="Close dialog"> </span>
+          <i class="newArrow next" aria-label="Next image"></i>
+          <i class="newArrow prev" aria-label="Previous image"></i>
           <!-- Modal Content (The Image) -->
           <figure><img class="modal-content" id="img01" /></figure>
           <!-- <video autoplay="true" class="modal-content" id="video01"></video> -->
@@ -80,7 +102,11 @@
       <div class="content modal fix">
         <header>
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <img
+            src="assets/icons/close.svg"
+            onclick="closeModal()"
+            aria-label="Close Contact Form"
+          />
         </header>
         <form name="reserve" method="get" onsubmit="return validate()">
           <div class="formData">
@@ -91,6 +117,7 @@
               id="first"
               name="first"
               minlength="2"
+              aria-label="Prénom"
             /><br />
             <p class="checker checkName">Need more than 2 letters</p>
           </div>
@@ -102,12 +129,19 @@
               id="last"
               name="last"
               minlength="2"
+              aria-label="Nom"
             /><br />
             <p class="checker checkLast">Need more than 2 letters</p>
           </div>
           <div class="formData">
             <label for="email">E-mail</label><br />
-            <input class="text-control" type="email" id="email" name="email" />
+            <input
+              class="text-control"
+              type="email"
+              id="email"
+              name="email"
+              aria-label="Email"
+            />
             <br />
             <p class="checker checkEmail">Need valid email</p>
           </div>
@@ -119,11 +153,12 @@
               id="message"
               name="message"
               rows="5"
+              aria-label="Message"
             ></textarea>
             <br />
             <p class="checker checkMessage">Champ doit être rempli</p>
           </div>
-          <button class="contact_button">Envoyer</button>
+          <button class="contact_button" aria-label="Send">Envoyer</button>
         </form>
       </div>
     </div>
