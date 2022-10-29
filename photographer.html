@@ -39,19 +39,14 @@
         </div>
       </section>
       <section class="photo-trier">
-        <label for="trier-photos">Trier par</label>
-        <div
-          class="select-wrapper"
-          id="trier-options"
-          aria-label="Order by"
-          aria-labelledby="8"
-        >
+        <label id="trier" for="trier-photos">Trier par</label>
+        <div class="select-wrapper" id="trier-options" aria-label="Order by">
           <div
             class="select"
             role="listbox"
             aria-activedescendant="listbox-1"
             aria-selected
-            aria-labelledby="trier-photos"
+            aria-labelledby="trier"
           >
             <div
               class="select__trigger"
@@ -90,7 +85,7 @@
           <i class="newArrow next" aria-label="Next image"></i>
           <i class="newArrow prev" aria-label="Previous image"></i>
           <!-- Modal Content (The Image) -->
-          <figure><img class="modal-content" id="img01" /></figure>
+          <figure><img class="modal-content" id="img01" alt="" /></figure>
           <!-- <video autoplay="true" class="modal-content" id="video01"></video> -->
 
           <!-- Modal Caption (Image Text) -->

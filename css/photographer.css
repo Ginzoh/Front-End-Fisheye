@@ -350,7 +350,6 @@ section article {
   font-size: 24px;
   color: #901c1c;
   margin-top: 10px;
-  width: 350px;
 }
 .bottom p:first-child {
   width: 75%;
@@ -398,7 +397,10 @@ section article {
   object-fit: cover;
   max-width: 80%;
 }
-
+iframe.modal-content {
+  height: 900px;
+  width: 999px;
+}
 #caption {
   margin: auto;
   display: block;

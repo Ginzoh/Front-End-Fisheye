@@ -79,22 +79,38 @@ function setAttributes(el, attrs) {
   }
 }
 
+//replace a string by an other
+String.prototype.replaceAll = function (str1, str2, ignore) {
+  return this.replace(
+    new RegExp(
+      str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"),
+      ignore ? "gi" : "g"
+    ),
+    typeof str2 == "string" ? str2.replace(/\$/g, "$$$$") : str2
+  );
+};
+
 function mediaFactory(medias) {
   const { id, photographerId, title, video, image, likes, date, price } =
     medias;
   const title_image = title;
-  // const namePic = image.replace("_", " ");
-  //alt des pics
   let src_link;
   let photo;
+  let namePic;
   function getPhotos(index) {
     if (typeof image === "undefined") {
       photo = document.createElement("video");
       photo.setAttribute("autoplay", true);
       src_link = video;
+      namePic = video.replaceAll("_", " ").replace(/\.[^/.]+$/, "");
+      console.log(namePic);
+      photo.setAttribute("aria-label", `${namePic}, closeup view `);
     } else {
       photo = document.createElement("img");
       src_link = image;
+      namePic = image.replaceAll("_", " ").replace(/\.[^/.]+$/, "");
+      console.log(namePic);
+      photo.setAttribute("alt", `${namePic}, closeup view `);
     }
     const photoTitle = document.createElement("p");
     const photoLike = document.createElement("p");
@@ -110,7 +126,6 @@ function mediaFactory(medias) {
     setAttributes(photo, {
       src: `assets/Sample Photos/${src_link}`,
       id: `${id}img`,
-      alt: `${title_image}, closeup view `,
     });
     divtitle.setAttribute("class", "bottom");
     divcontainer.dataset.index = index;
@@ -244,17 +259,36 @@ function affichePhotos(medias) {
         currFrame = iframe.cloneNode(false);
         currFrame.setAttribute("id", modalImg.getAttribute("id"));
         currFrame.setAttribute("class", "modal-content");
+        currFrame.setAttribute(
+          "aria-label",
+          media.video.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
+        );
         currFrame.src = img.src;
         parent = modalImg.parentNode;
         parent.insertBefore(currFrame, modalImg);
         parent.removeChild(modalImg);
+      } else {
+        modalImg.setAttribute(
+          "alt",
+          media.image.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
+        );
       }
       modalImg.src = this.src;
+
       captionText.innerHTML = media.title;
       content.dataset.current = e.target.parentElement.dataset.index;
     };
     document.querySelector(".next").onclick = function () {
-      let curr = modalImg.src;
+      console.log(
+        document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
+      );
+      if (
+        document.querySelector(
+          `.item-${parseInt(content.dataset.current) + 1}`
+        ) === null
+      ) {
+        return;
+      }
       if (typeof media.video === "undefined") {
         modalImg = document.getElementById("img01");
         let parent;
@@ -286,19 +320,37 @@ function affichePhotos(medias) {
           currFrame = iframe.cloneNode(false);
           currFrame.setAttribute("id", modalImg.getAttribute("id"));
           currFrame.setAttribute("class", "modal-content");
+          console.log(
+            my_index
+              .querySelector("video")
+              .ariaLabel.replaceAll(", closeup view", "")
+          );
           currFrame.setAttribute("src", my_index.querySelector("video").src);
+          currFrame.setAttribute(
+            "aria-label",
+            my_index
+              .querySelector("video")
+              .ariaLabel.replaceAll(", closeup view", "")
+          );
           parent = modalImg.parentNode;
           parent.insertBefore(currFrame, modalImg);
           parent.removeChild(modalImg);
         } else {
           modalImg.setAttribute("src", my_index.querySelector("img").src);
+          modalImg.setAttribute(
+            "alt",
+            my_index.querySelector("img").alt.replaceAll(", closeup view", "")
+          );
         }
+        captionText.innerHTML = my_index.querySelector("p").textContent;
         content.dataset.current = parseInt(content.dataset.current) + 1;
       }
     };
     document.querySelector(".prev").onclick = function () {
-      let curr = modalImg.src;
-
+      if (parseInt(content.dataset.current) - 1 < 0) {
+        console.log("gg wp");
+        return;
+      }
       if (typeof media.video === "undefined") {
         modalImg = document.getElementById("img01");
         let parent;
@@ -307,6 +359,10 @@ function affichePhotos(medias) {
         currFrame = img.cloneNode(false);
         currFrame.setAttribute("id", modalImg.getAttribute("id"));
         currFrame.setAttribute("class", "modal-content");
+        currFrame.setAttribute(
+          "alt",
+          media.image.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
+        );
         currFrame.src = this.src;
         parent = modalImg.parentNode;
         parent.insertBefore(currFrame, modalImg);
@@ -329,6 +385,12 @@ function affichePhotos(medias) {
           currFrame.setAttribute("id", modalImg.getAttribute("id"));
           currFrame.setAttribute("class", "modal-content");
           currFrame.setAttribute("src", my_index.querySelector("video").src);
+          currFrame.setAttribute(
+            "aria-label",
+            my_index
+              .querySelector("video")
+              .ariaLabel.replaceAll(", closeup view", "")
+          );
           parent = modalImg.parentNode;
           parent.insertBefore(currFrame, modalImg);
           parent.removeChild(modalImg);
