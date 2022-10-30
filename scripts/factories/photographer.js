@@ -28,8 +28,7 @@ function photographerFactory(data) {
     // img.setAttribute("src", picture);
     // img.setAttribute("alt", `Photo de profile de ${name}`);
     setAttributes(img, { src: picture });
-    img.setAttribute("aria-label", `Lien vers la page de ${name}`);
-    img.setAttribute("alt", "");
+    img.setAttribute("alt", `Lien vers la page de ${name}`);
     lien.setAttribute("class", "photoLink");
     const h2 = document.createElement("h2");
     h2.textContent = name;

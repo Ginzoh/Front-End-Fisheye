@@ -82,8 +82,8 @@
         <div class="content">
           <!-- The Close Button -->
           <span class="close" aria-label="Close dialog"> </span>
-          <i class="newArrow next" aria-label="Next image"></i>
-          <i class="newArrow prev" aria-label="Previous image"></i>
+          <span class="newArrow next" aria-label="Next image"></span>
+          <span class="newArrow prev" aria-label="Previous image"></span>
           <!-- Modal Content (The Image) -->
           <figure><img class="modal-content" id="img01" alt="" /></figure>
           <!-- <video autoplay="true" class="modal-content" id="video01"></video> -->
@@ -100,7 +100,7 @@
           <img
             src="assets/icons/close.svg"
             onclick="closeModal()"
-            aria-label="Close Contact Form"
+            alt="Close Contact Form"
           />
         </header>
         <form name="reserve" method="get" onsubmit="return validate()">
