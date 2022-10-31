@@ -549,3 +549,7 @@ iframe.modal-content {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
+
+.photo-trier {
+  margin-top: 9px;
+}
