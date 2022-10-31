@@ -408,6 +408,7 @@ function affichePhotos(medias) {
       currFrame = img.cloneNode(false);
       currFrame.setAttribute("id", modalImg.getAttribute("id"));
       currFrame.setAttribute("class", "modal-content");
+      currFrame.setAttribute("alt", "");
       parent = modalImg.parentNode;
       parent.insertBefore(currFrame, modalImg);
       parent.removeChild(modalImg);
