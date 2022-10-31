@@ -78,10 +78,13 @@ table {
   width: 100%;
   margin-top: 0px;
   height: 0%;
+  display: flex;
 }
 
 .modal header img {
   cursor: pointer;
+  align-self: flex-start;
+  margin-top: 10px;
 }
 
 .modal header h2 {
