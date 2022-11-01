@@ -18,7 +18,7 @@
   </head>
   <body>
     <header>
-      <a href="index.html"
+      <a href="index.html" tabindex="0"
         ><img
           src="assets/images/logo.png"
           alt="Fisheye Home Page"
@@ -33,6 +33,7 @@
             class="contact_button"
             onclick="displayModal()"
             aria-label="Contact me"
+            tabindex="0"
           >
             Contactez-moi
           </button>
@@ -40,7 +41,12 @@
       </section>
       <section class="photo-trier">
         <label id="trier" for="trier-photos">Trier par</label>
-        <div class="select-wrapper" id="trier-options" aria-label="Order by">
+        <div
+          class="select-wrapper"
+          id="trier-options"
+          aria-label="Order by"
+          tabindex="0"
+        >
           <div
             class="select"
             role="listbox"
@@ -93,7 +99,7 @@
         </div>
       </div>
     </main>
-    <div id="contact_modal" class="modalPics">
+    <div id="contact_modal" class="modalPics" tabindex="-1">
       <div class="content modal fix">
         <header>
           <h2>Contactez-moi</h2>

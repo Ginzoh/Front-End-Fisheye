@@ -127,6 +127,7 @@ function mediaFactory(medias) {
     setAttributes(photo, {
       src: `assets/Sample Photos/${src_link}`,
       id: `${id}img`,
+      tabindex: "0",
     });
     divtitle.setAttribute("class", "bottom");
     divcontainer.dataset.index = index;
@@ -231,6 +232,38 @@ async function getMedias(id) {
     medias: [...medias].filter((item) => item.photographerId === id),
   };
 }
+function openModal(img, modal, media, content) {
+  img.onclick = function (e) {
+    let captionText = document.getElementById("caption");
+    modal.style.display = "block";
+    modalImg = document.getElementById("img01");
+    if (typeof media.image === "undefined") {
+      let parent;
+      let iframe = document.createElement("iframe");
+      let currFrame;
+      currFrame = iframe.cloneNode(false);
+      currFrame.setAttribute("id", modalImg.getAttribute("id"));
+      currFrame.setAttribute("class", "modal-content");
+      currFrame.setAttribute(
+        "aria-label",
+        media.video.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
+      );
+      currFrame.src = img.src;
+      parent = modalImg.parentNode;
+      parent.insertBefore(currFrame, modalImg);
+      parent.removeChild(modalImg);
+    } else {
+      modalImg.setAttribute(
+        "alt",
+        media.image.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
+      );
+    }
+    modalImg.src = this.src;
+
+    captionText.innerHTML = media.title;
+    content.dataset.current = e.target.parentElement.dataset.index;
+  };
+}
 function affichePhotos(medias) {
   const content = document.querySelector(".content");
   const photos = document.querySelector(".myPhotos");
@@ -250,35 +283,20 @@ function affichePhotos(medias) {
     };
     // listId.push(`${media.id}img`);
     let img = document.getElementById(`${media.id}img`);
-    img.onclick = function (e) {
-      modal.style.display = "block";
-      modalImg = document.getElementById("img01");
-      if (typeof media.image === "undefined") {
-        let parent;
-        let iframe = document.createElement("iframe");
-        let currFrame;
-        currFrame = iframe.cloneNode(false);
-        currFrame.setAttribute("id", modalImg.getAttribute("id"));
-        currFrame.setAttribute("class", "modal-content");
-        currFrame.setAttribute(
-          "aria-label",
-          media.video.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
-        );
-        currFrame.src = img.src;
-        parent = modalImg.parentNode;
-        parent.insertBefore(currFrame, modalImg);
-        parent.removeChild(modalImg);
-      } else {
-        modalImg.setAttribute(
-          "alt",
-          media.image.replaceAll("_", " ").replace(/\.[^/.]+$/, "")
-        );
+    openModal(img, modal, media, content);
+    // function enterKey(event) {
+    //   if (event.keyCode === 13) {
+    //     console.log("test");
+    //     img.click();
+    //   }
+    // }
+    img.setAttribute("onkeypress", "return enterKey(event)");
+    img.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById(`${media.id}img`).click();
       }
-      modalImg.src = this.src;
-
-      captionText.innerHTML = media.title;
-      content.dataset.current = e.target.parentElement.dataset.index;
-    };
+    });
     document.querySelector(".next").onclick = function () {
       console.log(
         document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
