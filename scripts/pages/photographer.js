@@ -109,6 +109,7 @@ function mediaFactory(medias) {
       photo = document.createElement("img");
       src_link = image;
       namePic = image.replaceAll("_", " ").replace(/\.[^/.]+$/, "");
+      console.log(image);
       console.log(namePic);
       photo.setAttribute("alt", `${namePic}, closeup view `);
     }
