@@ -98,9 +98,10 @@ function validate() {
     return false;
   }
   console.log(
-    document.getElementById("first").text.value,
-    document.getElementById("last").text.value,
-    document.getElementById("email").text.value,
-    texdocument.getElementById("message").text.value
+    document.getElementById("first").value,
+    document.getElementById("last").value,
+    document.getElementById("email").value,
+    texdocument.getElementById("message").value
   );
+  return true;
 }
