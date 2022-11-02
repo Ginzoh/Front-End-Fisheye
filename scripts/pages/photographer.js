@@ -5,7 +5,7 @@
 function my_select(medias) {
   document
     .querySelector(".select-wrapper")
-    .addEventListener("click", function (e) {
+    .addEventListener("click", function () {
       this.querySelector(".select").classList.toggle("open");
     });
   for (const option of document.querySelectorAll(".custom-option")) {
@@ -39,7 +39,7 @@ function call_tri(triValue, medias) {
 
       if (key1 > key2) {
         return -1;
-      } else if (key1 == key2) {
+      } else if (key1 === key2) {
         return 0;
       } else {
         return 1;
@@ -86,7 +86,7 @@ String.prototype.replaceAll = function (str1, str2, ignore) {
       str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"),
       ignore ? "gi" : "g"
     ),
-    typeof str2 == "string" ? str2.replace(/\$/g, "$$$$") : str2
+    typeof str2 === "string" ? str2.replace(/\$/g, "$$$$") : str2
   );
 };
 
@@ -251,7 +251,7 @@ function openModal(img, modal, media, content) {
     let captionText = document.getElementById("caption");
     let lightbox = document.getElementById("myModal");
     modal.style.display = "block";
-    modalImg = document.getElementById("img01");
+    let modalImg = document.getElementById("img01");
     if (typeof media.image === "undefined") {
       let parent;
       let iframe = document.createElement("iframe");
@@ -287,7 +287,6 @@ function affichePhotos(medias) {
   let modalImg = document.getElementById("img01");
   let captionText = document.getElementById("caption");
   let total = 0;
-  let listId = [];
   medias.forEach((media, index) => {
     let number = media.likes;
     total += media.likes;
@@ -297,7 +296,6 @@ function affichePhotos(medias) {
     document.getElementById(media.id).onclick = function () {
       changeN(media.id, ++number, ++total);
     };
-    // listId.push(`${media.id}img`);
     let img = document.getElementById(`${media.id}img`);
     openModal(img, modal, media, content);
     img.addEventListener("keypress", function (event) {
@@ -499,7 +497,7 @@ async function init() {
 }
 
 function modalEvent(event, nbr) {
-  if (event.keyCode == 13) {
+  if (event.keyCode === 13) {
     if (nbr === 0) {
       document.getElementById("closeImg").click();
     }
