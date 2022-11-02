@@ -7,6 +7,7 @@ function displayModal() {
 function closeModal() {
   const modal = document.getElementById("contact_modal");
   modal.style.display = "none";
+  document.querySelector("body").focus();
 }
 
 //check if a String is an email
@@ -96,4 +97,10 @@ function validate() {
     alert("Please enter a valid email");
     return false;
   }
+  console.log(
+    document.getElementById("first").text.value,
+    document.getElementById("last").text.value,
+    document.getElementById("email").text.value,
+    texdocument.getElementById("message").text.value
+  );
 }
