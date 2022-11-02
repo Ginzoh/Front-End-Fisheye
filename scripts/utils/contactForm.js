@@ -97,6 +97,11 @@ function validate() {
     alert("Please enter a valid email");
     return false;
   }
+  if (!messageBool) {
+    toggleError(".checkMessage");
+    alert("Please enter a valid message");
+    return false;
+  }
   console.log(
     document.getElementById("first").value,
     document.getElementById("last").value,

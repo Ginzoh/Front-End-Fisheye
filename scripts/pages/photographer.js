@@ -232,8 +232,22 @@ async function getMedias(id) {
     medias: [...medias].filter((item) => item.photographerId === id),
   };
 }
+function arrows(event) {
+  switch (event.key) {
+    case "ArrowLeft":
+      console.log("I pressed left");
+      document.getElementById("prev").click();
+      break;
+    case "ArrowRight":
+      console.log("I pressed right");
+      document.getElementById("next").click();
+      // Right pressed
+      break;
+  }
+}
 function openModal(img, modal, media, content) {
   img.onclick = function (e) {
+    document.addEventListener("keydown", arrows);
     let captionText = document.getElementById("caption");
     let lightbox = document.getElementById("myModal");
     modal.style.display = "block";
@@ -286,7 +300,6 @@ function affichePhotos(medias) {
     // listId.push(`${media.id}img`);
     let img = document.getElementById(`${media.id}img`);
     openModal(img, modal, media, content);
-    img.setAttribute("onkeypress", "return enterKey(event)");
     img.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -297,13 +310,6 @@ function affichePhotos(medias) {
       console.log(
         document.querySelector(`.item-${parseInt(content.dataset.current) + 1}`)
       );
-      if (
-        document.querySelector(
-          `.item-${parseInt(content.dataset.current) + 1}`
-        ) === null
-      ) {
-        return;
-      }
       if (typeof media.video === "undefined") {
         modalImg = document.getElementById("img01");
         let parent;
@@ -322,10 +328,19 @@ function affichePhotos(medias) {
       }
       modalImg = document.getElementById("img01");
       modalImg.src = this.src;
+      let my_index;
+      if (
+        document.querySelector(
+          `.item-${parseInt(content.dataset.current) + 1}`
+        ) === null
+      ) {
+        my_index = document.querySelector(`.item-0`);
+      } else {
+        my_index = document.querySelector(
+          `.item-${parseInt(content.dataset.current) + 1}`
+        );
+      }
 
-      let my_index = document.querySelector(
-        `.item-${parseInt(content.dataset.current) + 1}`
-      );
       if (my_index) {
         // modalImg.setAttribute("src", my_index.querySelector("img").src);
         if (my_index.querySelector("img") === null) {
@@ -335,11 +350,6 @@ function affichePhotos(medias) {
           currFrame = iframe.cloneNode(false);
           currFrame.setAttribute("id", modalImg.getAttribute("id"));
           currFrame.setAttribute("class", "modal-content");
-          console.log(
-            my_index
-              .querySelector("video")
-              .ariaLabel.replaceAll(", closeup view", "")
-          );
           currFrame.setAttribute("src", my_index.querySelector("video").src);
           currFrame.setAttribute(
             "aria-label",
@@ -358,7 +368,15 @@ function affichePhotos(medias) {
           );
         }
         captionText.innerHTML = my_index.querySelector("p").textContent;
-        content.dataset.current = parseInt(content.dataset.current) + 1;
+        if (
+          document.querySelector(
+            `.item-${parseInt(content.dataset.current) + 1}`
+          ) === null
+        ) {
+          content.dataset.current = 0;
+        } else {
+          content.dataset.current = parseInt(content.dataset.current) + 1;
+        }
       }
     };
     document.querySelector(".prev").onclick = function () {
@@ -400,11 +418,12 @@ function affichePhotos(medias) {
           currFrame.setAttribute("id", modalImg.getAttribute("id"));
           currFrame.setAttribute("class", "modal-content");
           currFrame.setAttribute("src", my_index.querySelector("video").src);
+          console.log(my_index.querySelector("video"));
           currFrame.setAttribute(
             "aria-label",
             my_index
               .querySelector("video")
-              .ariaLabel.replaceAll(", closeup view", "")
+              .ariaLabel.replaceAll(", closeup view ", "")
           );
           parent = modalImg.parentNode;
           parent.insertBefore(currFrame, modalImg);
@@ -429,10 +448,12 @@ function affichePhotos(medias) {
       parent.removeChild(modalImg);
       const modal = document.getElementById("myModal");
       modal.style.display = "none";
+      document.removeEventListener("keydown", arrows);
     };
   });
   document.getElementById("total-likes").innerHTML = `${total} ♥`;
 }
+
 async function showPhotograph(photographer, medias) {
   const photographersSection = document.querySelector(".photograph-header");
   const show_price = document.querySelector(".like-price");
@@ -503,10 +524,10 @@ function modalEvent(event, nbr) {
     if (nbr === 7) {
       document.getElementById("closeModal").click();
     }
+    if (nbr === 8) {
+      document.getElementById("contact_button").click();
+    }
   }
 }
-function closePhotoModal() {
-  const modal = document.getElementById("myModal");
-  modal.style.display = "none";
-}
+
 init();

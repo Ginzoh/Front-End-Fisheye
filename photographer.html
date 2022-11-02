@@ -31,6 +31,7 @@
         <div class="contact_width">
           <button
             class="contact_button"
+            id="openmodal"
             onclick="displayModal()"
             aria-label="Contact me"
             tabindex="0"
@@ -199,7 +200,14 @@
             <br />
             <p class="checker checkMessage">Champ doit être rempli</p>
           </div>
-          <button class="contact_button" aria-label="Send">Envoyer</button>
+          <button
+            id="contact_button"
+            class="contact_button"
+            aria-label="Send"
+            onkeypress="return modalEvent(event, 8)"
+          >
+            Envoyer
+          </button>
         </form>
       </div>
     </div>
