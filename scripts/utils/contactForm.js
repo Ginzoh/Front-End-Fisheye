@@ -101,7 +101,7 @@ function validate() {
     document.getElementById("first").value,
     document.getElementById("last").value,
     document.getElementById("email").value,
-    texdocument.getElementById("message").value
+    document.getElementById("message").value
   );
   return true;
 }
