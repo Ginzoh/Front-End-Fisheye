@@ -235,6 +235,7 @@ async function getMedias(id) {
 function openModal(img, modal, media, content) {
   img.onclick = function (e) {
     let captionText = document.getElementById("caption");
+    let lightbox = document.getElementById("myModal");
     modal.style.display = "block";
     modalImg = document.getElementById("img01");
     if (typeof media.image === "undefined") {
@@ -262,6 +263,7 @@ function openModal(img, modal, media, content) {
 
     captionText.innerHTML = media.title;
     content.dataset.current = e.target.parentElement.dataset.index;
+    lightbox.focus();
   };
 }
 function affichePhotos(medias) {
@@ -284,12 +286,6 @@ function affichePhotos(medias) {
     // listId.push(`${media.id}img`);
     let img = document.getElementById(`${media.id}img`);
     openModal(img, modal, media, content);
-    // function enterKey(event) {
-    //   if (event.keyCode === 13) {
-    //     console.log("test");
-    //     img.click();
-    //   }
-    // }
     img.setAttribute("onkeypress", "return enterKey(event)");
     img.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
@@ -458,7 +454,6 @@ async function showPhotograph(photographer, medias) {
   let nameTitle = document.querySelector("h2");
   let myModal = document.querySelector("#contact_modal");
   myModal.setAttribute("aria-label", `Contact me ${photographer.name}`);
-  myModal.setAttribute("aria-labelleby", "2");
   let name = document.createTextNode(` ${photographer.name}`);
   nameTitle.appendChild(name);
 }
@@ -480,6 +475,35 @@ async function init() {
   }
   // document.getElementById("photos").innerHTML = "";
   // affichePhotos(call_tri("popularité", medias));
+}
+
+function modalEvent(event, nbr) {
+  if (event.keyCode == 13) {
+    if (nbr === 0) {
+      document.getElementById("closeImg").click();
+    }
+    if (nbr === 1) {
+      document.getElementById("prev").click();
+    }
+    if (nbr === 2) {
+      document.getElementById("next").click();
+    }
+    if (nbr === 3) {
+      document.getElementById("select").click();
+    }
+    if (nbr === 4) {
+      document.getElementById("popularité").click();
+    }
+    if (nbr === 5) {
+      document.getElementById("date").click();
+    }
+    if (nbr === 6) {
+      document.getElementById("titre").click();
+    }
+    if (nbr === 7) {
+      document.getElementById("closeModal").click();
+    }
+  }
 }
 function closePhotoModal() {
   const modal = document.getElementById("myModal");

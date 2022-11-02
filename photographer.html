@@ -41,12 +41,7 @@
       </section>
       <section class="photo-trier">
         <label id="trier" for="trier-photos">Trier par</label>
-        <div
-          class="select-wrapper"
-          id="trier-options"
-          aria-label="Order by"
-          tabindex="0"
-        >
+        <div class="select-wrapper" id="trier-options" aria-label="Order by">
           <div
             class="select"
             role="listbox"
@@ -56,9 +51,12 @@
           >
             <div
               class="select__trigger"
+              id="select"
               role="button"
               aria-haspopup="listbox"
               aria-expanded
+              tabindex="0"
+              onkeypress="return modalEvent(event,3)"
             >
               <span>Popularité</span>
               <div class="arrow"></div>
@@ -66,15 +64,29 @@
             <div class="custom-options">
               <span
                 class="custom-option selected"
+                id="popularité"
                 role="option"
                 data-value="popularité"
-                id="popularité"
+                tabindex="0"
+                onkeypress="return modalEvent(event,4)"
                 >Popularité</span
               >
-              <span class="custom-option" role="option" data-value="date"
+              <span
+                class="custom-option"
+                id="date"
+                role="option"
+                data-value="date"
+                tabindex="0"
+                onkeypress="return modalEvent(event,5)"
                 >Date</span
               >
-              <span class="custom-option" role="option" data-value="titre"
+              <span
+                class="custom-option"
+                id="titre"
+                role="option"
+                data-value="titre"
+                tabindex="0"
+                onkeypress="return modalEvent(event,6)"
                 >Titre</span
               >
             </div>
@@ -84,12 +96,37 @@
         <article class="myPhotos" id="photos"></article>
       </section>
       <!-- The Modal -->
-      <div id="myModal" class="modalPics" aria-label="image closeup view">
+      <div
+        id="myModal"
+        class="modalPics"
+        aria-label="image closeup view"
+        tabindex="-1"
+      >
         <div class="content">
           <!-- The Close Button -->
-          <span class="close" aria-label="Close dialog"> </span>
-          <span class="newArrow next" aria-label="Next image"></span>
-          <span class="newArrow prev" aria-label="Previous image"></span>
+          <span
+            class="close"
+            id="closeImg"
+            aria-label="Close dialog"
+            tabindex="0"
+            onkeypress="return modalEvent(event, 0)"
+          >
+          </span>
+          <span
+            class="newArrow prev"
+            id="prev"
+            aria-label="Previous image"
+            tabindex="0"
+            onkeypress="return modalEvent(event, 1)"
+          ></span>
+          <span
+            class="newArrow next"
+            id="next"
+            aria-label="Next image"
+            tabindex="0"
+            onkeypress="return modalEvent(event, 2)"
+          ></span>
+
           <!-- Modal Content (The Image) -->
           <figure><img class="modal-content" id="img01" alt="" /></figure>
           <!-- <video autoplay="true" class="modal-content" id="video01"></video> -->
@@ -104,9 +141,12 @@
         <header>
           <h2>Contactez-moi</h2>
           <img
+            id="closeModal"
             src="assets/icons/close.svg"
             onclick="closeModal()"
             alt="Close Contact Form"
+            tabindex="0"
+            onkeypress="return modalEvent(event,7)"
           />
         </header>
         <form name="reserve" method="get" onsubmit="return validate()">
